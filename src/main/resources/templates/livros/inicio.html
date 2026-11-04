@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Biblioteca</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 
 <body>
@@ -19,13 +19,23 @@
         <a th:href="@{/emprestimos}">Empréstimos</a>
     </nav>
 
-    <main class="container home-container">
-        <h2 class="home-title">Bem-vindo ao Sistema de Biblioteca</h2>
+    <main>
+        <div class="container home-container">
+            <h2 class="home-title">Bem-vindo ao Sistema de Biblioteca</h2>
 
-        <p class="home-text">
-            Gerencie livros, autores, categorias, usuários e empréstimos
-            de forma eficiente.
-        </p>
+            <p class="home-text">
+                Gerencie livros, autores, categorias, usuários e empréstimos
+                de forma eficiente.
+            </p>
+        </div>
+        <div class="container home-container">
+        <section>
+            <h2 class="home-title">Livros Disponíveis:</h2>
+            <ul>
+                <li th:each="livro : ${livros}" th:text="${livro}"></li>
+            </ul>
+        </section>
+        </div>
     </main>
 
     <footer class="footer">

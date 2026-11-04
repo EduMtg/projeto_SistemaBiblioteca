@@ -1,15 +1,20 @@
 package com.ger.biblioteca.biblioteca.controller;
 
+import com.ger.biblioteca.biblioteca.model.Livro;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class LivroController {
+    List <Livro> livros = new ArrayList<>();
+
     @GetMapping("/")
-    public String inicio() {
+    public String inicio(Model model) {
+        model.addAttribute("livros", livros);
         return "livros/inicio";
     }
 
@@ -27,24 +32,14 @@ public class LivroController {
                 model.addAttribute("titulo", titulo);
                 model.addAttribute("autor", autor);
                 model.addAttribute("isbn", isbn);
+                livros.add(new Livro(titulo, autor, isbn));
                 return "livros/confirmacaoLivro";
             }
 
-    @GetMapping("/autores")
-    public String autores() {
-        return "livros/autores";
-    }
-
-    @PostMapping ("/livros/confirmacaoAutor")
-    public String confirmacaoAutor(
-            @RequestParam String nome,
-            @RequestParam String nacionalidade,
-            @RequestParam int qtdLivrosPublicados,
-            Model model) {
-        model.addAttribute("nome", nome);
-        model.addAttribute("nacionalidade", nacionalidade);
-        model.addAttribute("qtdLivrosPublicados", qtdLivrosPublicados);
-        return "livros/confirmacaoAutor";
+    @GetMapping("/excluir/{indice}")
+    public String excluir(@PathVariable int indice){
+        livros.remove(indice);
+        return "redirect:/";
     }
 
     @GetMapping("/categorias")
